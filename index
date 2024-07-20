@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patriot - Чат</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #ecf0f1;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .message.user {
+            background-color: #d1e7dd;
+            text-align: right;
+        }
+        .message.patriot {
+            background-color: #f8d7da;
+            text-align: left;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Patriot - Чат</h1>
+    </header>
+    <main>
+        <h1>Чат</h1>
+        <div class="chat-container" id="chat-container">
+            <!-- Сообщения будут добавляться сюда -->
+        </div>
+        <form id="chat-form">
+            <label for="prompt">Промт:</label>
+            <input type="text" id="prompt" name="prompt" value="Ответь как патриоти России ">
+            <label for="message">Сообщение:</label>
+            <input type="text" id="message" name="message" required>
+            <input type="submit" value="Отправить">
+        </form>
+    </main>
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message');
+
+        chatForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const messageText = messageInput.value;
+            if (messageText.trim() !== '') {
+                addMessage('User', messageText);
+                messageInput.value = '';
+                // Здесь можно добавить логику для отправки сообщения на сервер и получения ответа
+                setTimeout(() => {
+                    addMessage('Patriot', 'Это ответ от Patriot.');
+                }, 1000);
+            }
+        });
+
+        function addMessage(sender, text) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender.toLowerCase());
+            messageElement.textContent = `${sender}: ${text}`;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
